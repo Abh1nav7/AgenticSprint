@@ -1,0 +1,16 @@
+{
+  "glow": {
+    "radiusPx": 700,
+    "intensity": 0.25,
+    "yOffsetPx": -160
+  },
+  "rings": [
+    { "size": 1200, "durationSec": 40, "reverse": false },
+    { "size": 900, "durationSec": 30, "reverse": true },
+    { "size": 600, "durationSec": 20, "reverse": false }
+  ],
+  "starfield": {
+    "opacity": 0.05
+  }
+}
+
