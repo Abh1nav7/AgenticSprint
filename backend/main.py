@@ -3,10 +3,16 @@ import os
 from typing import Optional
 import shutil
 from pathlib import Path
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+env_path = Path(__file__).parent / '.env'
+load_dotenv(str(env_path))
 
 from fastapi import FastAPI, Depends, HTTPException, status, Response, UploadFile, File, Request
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+from medical_analysis import router as medical_router
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 from pydantic import BaseModel, EmailStr
@@ -381,4 +387,7 @@ async def logout(response: Response):
 
 @app.get("/")
 def root():
-    return {"status": "ok"}
+    return {"message": "API is running"}
+
+# Include medical analysis routes
+app.include_router(medical_router, prefix="/api/v1")

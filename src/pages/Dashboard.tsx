@@ -31,8 +31,16 @@ interface UploadedFile {
   date: string
 }
 
+interface MetricData {
+  label: string;
+  value: string;
+  change: string;
+  icon: React.FC<{ className?: string }>;
+  trend: 'up' | 'down';
+}
+
 // Sample data for metrics
-const metrics = [
+const metrics: MetricData[] = [
   { 
     label: 'Cases Analyzed',
     value: '245',
@@ -47,21 +55,32 @@ const metrics = [
     icon: Flame,
     trend: 'down'
   },
+]
+
+interface ModeLink {
+  name: string;
+  url: string;
+  icon: React.FC<{ className?: string }>;
+  description: string;
+}
+
+// Mode links configuration
+const modeLinks: ModeLink[] = [
   {
-    label: 'Avg Response Time',
-    value: '2.5 min',
-    change: '-30s',
-    icon: Timer,
-    trend: 'up'
+    name: "Doctor Mode",
+    url: "https://medbot-backend-production-505e.up.railway.app/",
+    icon: Stethoscope,
+    description: "Access specialized medical analysis tools and professional features"
   },
   {
-    label: 'Confidence Score',
-    value: '94.2%',
-    change: '+1.5%',
-    icon: TrendingUp,
-    trend: 'up'
+    name: "Patient Mode",
+    url: "https://chatbot1-grlj.onrender.com/",
+    icon: FileText,
+    description: "Access patient-friendly interface and consultation features"
   }
 ]
+
+
 
 interface PatientRecord {
   id: string
@@ -75,7 +94,11 @@ export const Dashboard: React.FC = () => {
   const { user, loading, signOut } = useAuth()
   const { show } = useToast()
 
-  // Loading state is now handled by PrivateRoute
+  // Function to handle mode selection
+  const handleModeSelect = (url: string, modeName: string) => {
+    window.open(url, '_blank')
+    show(`Opening ${modeName}...`, 'info')
+  }
 
   // Handle initiating logout
   const initiateLogout = () => {
@@ -206,6 +229,22 @@ export const Dashboard: React.FC = () => {
 
   return (
     <DashboardLayout>
+      {/* Coming Soon Announcement */}
+      <div className="mb-6 rounded-lg border border-blue-500/20 bg-blue-500/10 p-4">
+        <div className="flex items-center space-x-3">
+          <div className="rounded-full bg-blue-500/20 p-2">
+            <FileSpreadsheet className="h-6 w-6 text-blue-500" />
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold text-blue-500">Coming Soon!</h3>
+            <p className="text-sm text-blue-200">
+              Our AI-powered medical records analysis and reporting feature is under development. 
+              Soon you'll be able to upload medical records and get instant AI-generated analysis and insights.
+            </p>
+          </div>
+        </div>
+      </div>
+
       {/* Logout Confirmation Modal */}
       <ConfirmModal
         isOpen={showLogoutConfirm}
@@ -218,6 +257,28 @@ export const Dashboard: React.FC = () => {
       />
 
       {/* Toast Notifications are now handled by ToastContext */}
+      {/* Mode Selection */}
+      <div className="mb-8">
+        <h2 className="text-2xl font-bold mb-4">Select Mode</h2>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {modeLinks.map((mode) => (
+            <button
+              key={mode.name}
+              onClick={() => handleModeSelect(mode.url, mode.name)}
+              className="flex items-center p-6 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-colors"
+            >
+              <div className="rounded-lg bg-primary/20 p-3 mr-4">
+                <mode.icon className="h-6 w-6 text-primary" />
+              </div>
+              <div className="text-left">
+                <h3 className="text-lg font-semibold">{mode.name}</h3>
+                <p className="text-sm text-gray-400">{mode.description}</p>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* Metrics Grid */}
       <div className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-4">
         {metrics.map((metric) => (
