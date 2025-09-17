@@ -8,22 +8,31 @@ A modern web application that combines AI-powered medical diagnostics with an in
   - JWT-based authentication
   - Protected routes and API endpoints
   - User session management
+  - Profile customization with avatar support
 
-- 💉 Medical Record Management
-  - Upload and manage medical reports
-  - Support for various file types (PDF, DICOM, Images)
-  - Secure file storage and retrieval
+- 💉 Medical Record Management (Coming Soon!)
+  - AI-powered analysis of medical records
+  - Support for various file types
+  - Secure document processing
+  - Automated insights generation
 
-- 🤖 AI-Powered Diagnostics
-  - Automated analysis of medical records
-  - Pattern recognition in medical images
+- 🏥 Dual Mode Access
+  - Doctor Mode: Professional medical analysis tools
+    - Access via: https://medbot-backend-production-505e.up.railway.app/
+    - Complete medical analysis capabilities
+    - Professional diagnostic tools
+  
+  - Patient Mode: User-friendly interface
+    - Access via: https://chatbot1-grlj.onrender.com/
+    - Simplified consultation features
+    - Easy-to-understand reports
+
+- 🤖 AI Integration
+  - OpenRouter AI integration
+  - Advanced medical document analysis
   - Risk assessment and early warnings
-  - Treatment suggestions
-
-- 💬 Integrated AI Chatbot
-  - Real-time medical consultations
-  - Context-aware responses
-  - Medical terminology understanding
+  - Detailed recommendations
+  - Confidence metrics for analysis
 
 ## Tech Stack
 
@@ -33,20 +42,52 @@ A modern web application that combines AI-powered medical diagnostics with an in
 - Framer Motion for animations
 - Lucide icons
 - Context API for state management
+- Toast notifications
+- Modal dialogs
+- Protected routes
+- Form validation
 
 ### Backend
-- FastAPI (Python)
+- FastAPI (Python 3.13+)
 - SQLite database
 - JWT authentication
+- OpenRouter AI integration
 - File handling and storage
-- AI model integration (upcoming)
+- Environment configuration
+- Async processing
+
+### AI Integration
+- OpenRouter AI API
+- Model: deepseek/deepseek-chat-v3.1
+- JSON-structured responses
+- Medical context awareness
+- Confidence scoring
 
 ## Getting Started
 
 ### Prerequisites
 - Node.js (v18 or higher)
-- Python (v3.10 or higher)
-- pnpm (preferred package manager)
+- Python (v3.13 or higher)
+- OpenRouter API key
+
+### Environment Setup
+1. Create `.env` file in backend directory:
+```
+OPENROUTER_API_KEY=your_api_key_here
+```
+
+### Backend Installation
+```bash
+cd backend
+pip install -r requirements.txt
+uvicorn main:app --reload
+```
+
+### Frontend Installation
+```bash
+npm install
+npm run dev
+```
 
 ### Installation
 
